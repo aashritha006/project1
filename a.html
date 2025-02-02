@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Watchlist</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color:mediumslateblue;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #4e73df;
+        }
+
+        .input-section {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 200px;
+            font-size: 1em;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4e73df;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background-color: #2c56d6;
+        }
+
+        .movie-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .movie-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .movie-item p {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .watched {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .watched-btn {
+            background-color: #ffac33;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .watched-btn:hover {
+            background-color: #e68900;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Movie Watchlist</h1>
+        
+        <div class="input-section">
+            <input type="text" id="movieName" placeholder="Enter Movie Name">
+            <input type="text" id="movieGenre" placeholder="Enter Genre">
+            <button id="addMovieBtn">Add Movie</button>
+        </div>
+
+        <div id="movieList" class="movie-list"></div>
+    </div>
+
+    <script>
+        const addMovieBtn = document.getElementById('addMovieBtn');
+        const movieNameInput = document.getElementById('movieName');
+        const movieGenreInput = document.getElementById('movieGenre');
+        const movieList = document.getElementById('movieList');
+
+        // Function to create a movie item
+        function createMovieItem(name, genre) {
+            const movieItem = document.createElement('div');
+            movieItem.classList.add('movie-item');
+
+            const movieText = document.createElement('p');
+            movieText.textContent = `${name} - ${genre}`;
+
+            const watchedBtn = document.createElement('button');
+            watchedBtn.textContent = 'Mark as Watched';
+            watchedBtn.classList.add('watched-btn');
+
+            // Toggle the "watched" status
+            watchedBtn.addEventListener('click', () => {
+                movieItem.classList.toggle('watched');
+                watchedBtn.textContent = movieItem.classList.contains('watched') ? 'Unmark as Watched' : 'Mark as Watched';
+            });
+
+            movieItem.appendChild(movieText);
+            movieItem.appendChild(watchedBtn);
+
+            return movieItem;
+        }
+
+        // Add a movie to the list
+        addMovieBtn.addEventListener('click', () => {
+            const movieName = movieNameInput.value.trim();
+            const movieGenre = movieGenreInput.value.trim();
+
+            if(movieName && movieGenre) {
+                const newMovieItem = createMovieItem(movieName, movieGenre);
+                movieList.appendChild(newMovieItem);
+
+                // Clear the input fields
+                movieNameInput.value = '';
+                movieGenreInput.value = '';
+            } else {
+                alert('Please enter both movie name and genre!');
+            }
+        });
+    </script>
+    
+</body>
+</html>
