@@ -4,4 +4,3 @@ numpy==1.22.3
 python==3.9
 flask_sqlalchemy==2.5.1
 gunicorn==20.1.0  # Required for production
-
